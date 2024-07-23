@@ -2,6 +2,22 @@ const { MessageMedia, Location, Buttons, List, Poll } = require('whatsapp-web.js
 const { sessions } = require('../sessions')
 const { sendErrorResponse } = require('../utils')
 
+function converterObjetoSalvo (original) {
+  const convertToJson = JSON.stringify(original)
+  const obj = JSON.parse(convertToJson)
+    const data = obj._data;
+    const dto = {}
+    const propiedades = ['id', 'type', 'body', 'from', 'to']
+
+    for(const propertie in obj) {
+      if(propiedades.includes(propertie)) {
+        dto[propertie] = obj[propertie]
+      }
+    }
+ 
+  return dto
+}
+
 /**
  * Send a message to a chat using the WhatsApp API
  *
@@ -77,7 +93,7 @@ const sendMessage = async (req, res) => {
           const media = options.media
           options.media = new MessageMedia(media.mimetype, media.data, media.filename = null, media.filesize = null)
         }
-        messageOut = await client.sendMessage(chatId, content, options)
+        messageOut = converterObjetoSalvo(await client.sendMessage(chatId, content, options))
         break
       case 'MessageMediaFromURL': {
         const messageMediaFromURL = await MessageMedia.fromUrl(content, { unsafeMime: true })
@@ -118,7 +134,9 @@ const sendMessage = async (req, res) => {
         return sendErrorResponse(res, 404, 'contentType invalid, must be string, MessageMedia, MessageMediaFromURL, Location, Buttons, List, Contact or Poll')
     }
 
-    res.json({ success: true, message: messageOut })
+    
+
+    res.json(converterObjetoSalvo(messageOut))
   } catch (error) {
     console.log(error)
     sendErrorResponse(res, 500, error.message)
