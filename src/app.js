@@ -22,7 +22,7 @@ const corsOptions = {
     // credentials: true // Se você precisar enviar cookies ou cabeçalhos de autenticação
   };
 
-app.use(cors(corsOptions))
+app.use(cors())
 app.disable('x-powered-by')
 
 app.use((req, res, next) => {
