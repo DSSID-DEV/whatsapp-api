@@ -11,6 +11,7 @@ const { maxAttachmentSize } = require('./config')
 const allowedOrigins = ['https://feature-dev--e-post.netlify.app/', 'https://disparo-de-message-api-a27cfb7ca502.herokuapp.com'];
 
 // Initialize Express app
+
 const corsOptions = {
     origin: function (origin, callback) {
       if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
