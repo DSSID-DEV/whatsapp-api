@@ -10,7 +10,10 @@ const { maxAttachmentSize } = require('./config')
 
 // Initialize Express app
 
-app.use(cors())
+app.use(cors({
+    origin: '*',  // Permite todas as origens
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
+}))
 app.disable('x-powered-by')
 
 app.use((req, res, next) => {
