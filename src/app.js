@@ -12,7 +12,7 @@ const { maxAttachmentSize } = require('./config')
 
 app.use(cors({
     origin: '*',  // Permite todas as origens
-  methods: ['GET', 'POST', 'PUT', 'DELETE']
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }))
 app.disable('x-powered-by')
 
