@@ -9,11 +9,20 @@ const { maxAttachmentSize } = require('./config')
 
 
 // Initialize Express app
+const corsOptions = {
+    origin: function (origin, callback) {
+      if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    // allowedHeaders: ['Content-Type', 'Authorization'],
+    // credentials: true // Se você precisar enviar cookies ou cabeçalhos de autenticação
+  };
 
-app.use(cors({
-    origin: '*',  // Permite todas as origens
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
-}))
+app.use(cors(corsOptions))
 app.disable('x-powered-by')
 
 app.use((req, res, next) => {
