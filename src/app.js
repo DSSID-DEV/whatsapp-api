@@ -25,7 +25,7 @@ const { maxAttachmentSize } = require('./config')
 //     // credentials: true // Se você precisar enviar cookies ou cabeçalhos de autenticação
 //   };
 
-// app.use(cors())
+app.use(cors())
 // app.use(cors(corsOptions))
 // app.options('*', cors(corsOptions))
 app.disable('x-powered-by')
@@ -37,7 +37,7 @@ app.use((req, res, next) => {
     if (req.method === 'OPTIONS') {
         return res.sendStatus(200);
     }
-    app.use(cors())
+    // app.use(cors())
     next();
 });
 
