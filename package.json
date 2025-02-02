@@ -41,7 +41,7 @@
   "author": "Christophe Hubert",
   "license": "MIT",
   "engines": {
-     "node": "18.2.1"
+     "node": "18.20.3"
   },
   "repository": {
     "type": "git",
