@@ -25,6 +25,8 @@ const { maxAttachmentSize } = require('./config')
 //     // credentials: true // Se você precisar enviar cookies ou cabeçalhos de autenticação
 //   };
 
+app.set('trust proxy', true);
+
 app.use(cors())
 // app.use(cors(corsOptions))
 // app.options('*', cors(corsOptions))
@@ -34,6 +36,9 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    if (process.env.FORCE_HTTPS !== 'false' && req.headers['x-forwarded-proto'] !== 'https') {
+        return res.redirect(`https://${req.hostname}${req.url}`);
+      }
     if (req.method === 'OPTIONS') {
         return res.sendStatus(200);
     }
