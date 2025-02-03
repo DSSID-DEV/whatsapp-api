@@ -7,42 +7,15 @@ const app = express()
 const bodyParser = require('body-parser')
 const { maxAttachmentSize } = require('./config')
 
-
-// const allowedOrigins = ['https://feature-dev--e-post.netlify.app/', 'https://disparo-de-message-api-a27cfb7ca502.herokuapp.com'];
-
-// Initialize Express app
-
-// const corsOptions = {
-//     origin: function (origin, callback) {
-//       if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-//         callback(null, true);
-//       } else {
-//         callback(new Error('Not allowed by CORS'));
-//       }
-//     },
-//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//     allowedHeaders: ['Content-Type', 'Authorization', 'x-api-key'],
-//     // credentials: true // Se você precisar enviar cookies ou cabeçalhos de autenticação
-//   };
-
 app.set('trust proxy', true);
 
 app.use(cors())
-// app.use(cors(corsOptions))
-// app.options('*', cors(corsOptions))
 app.disable('x-powered-by')
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    if (process.env.FORCE_HTTPS !== 'false' && req.headers['x-forwarded-proto'] !== 'https') {
-        return res.redirect(`https://${req.hostname}${req.url}`);
-      }
-    if (req.method === 'OPTIONS') {
-        return res.sendStatus(200);
-    }
-    // app.use(cors())
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');    
     next();
 });
 
